@@ -15,8 +15,8 @@ void setup() {
   arduboy.clear();
   paddleLeft.x = 5;
   paddleRight.x = 123;
-  paddleLeft.y = 55;
-  paddleRight.y = 45;
+  paddleRight.resetPaddle();
+  paddleLeft.resetPaddle();
 }
 
 void loop() {
@@ -31,7 +31,10 @@ void loop() {
     titleScreen();
     if(arduboy.justPressed(A_BUTTON)){
       gameState=GameState::Game;
+      paddleRight.resetPaddle();
+      paddleLeft.resetPaddle();
       ball.resetBall();
+      score = 0;
       arduboy.clear();
     }
   }
@@ -56,11 +59,10 @@ void loop() {
       paddleRight.y = random(3,45);
       if(score > highScore){
         highScore = score;
-        arduboy.setCursor(10, 0);
+        arduboy.setCursor(30, 15);
         arduboy.setTextSize(1);
         arduboy.print("New Record!");
       }
-      score = 0;
     endScreen();
     arduboy.delayShort(3000);
     gameState=GameState::MainMenu;
@@ -74,7 +76,15 @@ void loop() {
 
 
 void titleScreen(){
+  int c = arduboy.frameCount%140;
 
+  if(c<70){
+    arduboy.drawRect(c+25,35,3,3,WHITE);
+  }else{
+    arduboy.drawRect(165-c,35,3,3,WHITE);
+  }
+  arduboy.drawRect(23,30,2,10,WHITE);
+  arduboy.drawRect(98,30,2,10,WHITE);
   arduboy.drawBitmap(20,15,title,82,6);
   
   arduboy.setTextSize(1);
@@ -87,8 +97,12 @@ void titleScreen(){
 }
 
 void endScreen(){
-  arduboy.setCursor(35, 15);
+  arduboy.setCursor(35, 35);
   arduboy.setTextSize(1);
   arduboy.print("Game Over");
+  arduboy.setCursor(35, 50);
+  arduboy.setTextSize(1);
+  arduboy.print("Score: ");
+  arduboy.print(score);
   arduboy.display();
 }

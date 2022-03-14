@@ -14,4 +14,5 @@ public:
 public:
   void updatePaddle();
   void drawPaddle();
+  void resetPaddle();
 };

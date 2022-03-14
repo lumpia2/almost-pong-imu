@@ -15,3 +15,7 @@ void Paddle::updatePaddle(){
 void Paddle::drawPaddle(){
   arduboy.drawRect(this->x,this->y, 2, 18, WHITE);
 }
+void Paddle::resetPaddle(){
+  this->y = random(3,45);
+  this->destination = random(3,45);
+}

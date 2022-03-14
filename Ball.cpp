@@ -54,7 +54,7 @@ void Ball::processInputs(){
 
 void Ball::resetBall(){
   this->x = 10;
-  this->y = 20;
+  this->y = 40;
   this->vx = 1;
   this->vy = 0;
 }
